@@ -1,0 +1,104 @@
+{
+    "name": "GameInputs",
+    "maps": [
+        {
+            "name": "Player",
+            "id": "df06c4bd-b6fd-40ea-97f3-8349f44c9263",
+            "actions": [
+                {
+                    "name": "ControllJoint",
+                    "type": "Button",
+                    "id": "7ecbbc1f-263d-432c-bb86-afd9af11c33a",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "6cd8fdc9-572c-4fa8-a294-5eb5a10196cc",
+                    "path": "<Mouse>/press",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "ControllJoint",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
+        },
+        {
+            "name": "Frames",
+            "id": "fd280b6d-d46f-48d8-ab33-2636e02c6430",
+            "actions": [
+                {
+                    "name": "NextFrame",
+                    "type": "Button",
+                    "id": "6b481a68-244e-4b94-a83c-c3cf532bb0f6",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "timeScale",
+                    "type": "Button",
+                    "id": "0658e383-ab09-4da2-90d4-aa3fb6786029",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "0b0c643d-0c3e-43fc-b148-37902fb8ed41",
+                    "path": "<Keyboard>/space",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "NextFrame",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "1D Axis",
+                    "id": "2fe1b0a7-33ce-4376-b1e0-30536f4224b5",
+                    "path": "1DAxis",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "timeScale",
+                    "isComposite": true,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "negative",
+                    "id": "cce50ac3-1344-4e78-87b6-0aea4bfe1de1",
+                    "path": "<Keyboard>/leftArrow",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "timeScale",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "positive",
+                    "id": "fc130b37-fdba-4498-9fe4-dcef121b183a",
+                    "path": "<Keyboard>/rightArrow",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "timeScale",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                }
+            ]
+        }
+    ],
+    "controlSchemes": []
+}
