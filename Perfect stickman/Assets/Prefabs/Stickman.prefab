@@ -125,7 +125,6 @@ GameObject:
   - component: {fileID: 468083340895541881}
   - component: {fileID: 468083340895541863}
   - component: {fileID: 468083340895541885}
-  - component: {fileID: 1942493530}
   - component: {fileID: 1942493529}
   m_Layer: 7
   m_Name: Head
@@ -217,27 +216,6 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!50 &1942493530
-Rigidbody2D:
-  serializedVersion: 4
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 468083340895541880}
-  m_BodyType: 0
-  m_Simulated: 0
-  m_UseFullKinematicContacts: 0
-  m_UseAutoMass: 0
-  m_Mass: 1
-  m_LinearDrag: 0
-  m_AngularDrag: 0.05
-  m_GravityScale: 1
-  m_Material: {fileID: 0}
-  m_Interpolate: 0
-  m_SleepingMode: 1
-  m_CollisionDetection: 0
-  m_Constraints: 7
 --- !u!114 &1942493529
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1103,7 +1081,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   IndicatorPrefab: {fileID: 24069951133739236, guid: 9b4d67e0ec9449d42ad07a841be944cf, type: 3}
-  IndicatorParent: {fileID: 0}
+  showScale: 1.5
+  hideScale: 1
+  indicatorRadius: 0.5
+  isUiElement: 0
+  uiCamera: {fileID: 0}
+  rawImage: {fileID: 0}
+  _joints: []
+  _jointScripts: []
+  _jointIndicatorsScripts: []
 --- !u!1 &468083342709975717
 GameObject:
   m_ObjectHideFlags: 0
@@ -1260,9 +1246,25 @@ PrefabInstance:
       value: 7
       objectReference: {fileID: 0}
     - target: {fileID: 5692077656170630631, guid: e06f6ec642c0d024dab69b52bfc7bb07, type: 3}
+      propertyPath: holdSprite
+      value: 
+      objectReference: {fileID: 21300000, guid: 6070a374cb3db0e44a5221a1030a1aaf, type: 3}
+    - target: {fileID: 5692077656170630631, guid: e06f6ec642c0d024dab69b52bfc7bb07, type: 3}
+      propertyPath: relaxSprite
+      value: 
+      objectReference: {fileID: 21300000, guid: dbb98b6f9f79ea54fa5dfcfae630efa6, type: 3}
+    - target: {fileID: 5692077656170630631, guid: e06f6ec642c0d024dab69b52bfc7bb07, type: 3}
+      propertyPath: rotateSprite
+      value: 
+      objectReference: {fileID: 21300000, guid: 9843bc42f1b3b044c9b0b9fedef524c6, type: 3}
+    - target: {fileID: 5692077656170630631, guid: e06f6ec642c0d024dab69b52bfc7bb07, type: 3}
       propertyPath: indicatorRadius
       value: 0.5
       objectReference: {fileID: 0}
+    - target: {fileID: 5692077656170630631, guid: e06f6ec642c0d024dab69b52bfc7bb07, type: 3}
+      propertyPath: rotateTowartsSprite
+      value: 
+      objectReference: {fileID: 21300000, guid: 186d9a00d6dd44c4bb512639ed10709a, type: 3}
     - target: {fileID: 7808270317032854874, guid: e06f6ec642c0d024dab69b52bfc7bb07, type: 3}
       propertyPath: m_Name
       value: Leg LU
@@ -1335,10 +1337,19 @@ PrefabInstance:
       propertyPath: m_ConnectedRigidBody
       value: 
       objectReference: {fileID: 468083342709975722}
+    - target: {fileID: 9138137689897292428, guid: e06f6ec642c0d024dab69b52bfc7bb07, type: 3}
+      propertyPath: m_SleepingMode
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9138137689897292428, guid: e06f6ec642c0d024dab69b52bfc7bb07, type: 3}
+      propertyPath: m_CollisionDetection
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 3188569591406272534, guid: e06f6ec642c0d024dab69b52bfc7bb07, type: 3}
     - {fileID: 7808270317032854879, guid: e06f6ec642c0d024dab69b52bfc7bb07, type: 3}
     - {fileID: 7808270317032854878, guid: e06f6ec642c0d024dab69b52bfc7bb07, type: 3}
+    - {fileID: 5692077656170630631, guid: e06f6ec642c0d024dab69b52bfc7bb07, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: e06f6ec642c0d024dab69b52bfc7bb07, type: 3}
 --- !u!4 &7769030841378113853 stripped
 Transform:
@@ -1370,9 +1381,25 @@ PrefabInstance:
       value: 7
       objectReference: {fileID: 0}
     - target: {fileID: 5692077656170630631, guid: e06f6ec642c0d024dab69b52bfc7bb07, type: 3}
+      propertyPath: holdSprite
+      value: 
+      objectReference: {fileID: 21300000, guid: 6070a374cb3db0e44a5221a1030a1aaf, type: 3}
+    - target: {fileID: 5692077656170630631, guid: e06f6ec642c0d024dab69b52bfc7bb07, type: 3}
+      propertyPath: relaxSprite
+      value: 
+      objectReference: {fileID: 21300000, guid: dbb98b6f9f79ea54fa5dfcfae630efa6, type: 3}
+    - target: {fileID: 5692077656170630631, guid: e06f6ec642c0d024dab69b52bfc7bb07, type: 3}
+      propertyPath: rotateSprite
+      value: 
+      objectReference: {fileID: 21300000, guid: 9843bc42f1b3b044c9b0b9fedef524c6, type: 3}
+    - target: {fileID: 5692077656170630631, guid: e06f6ec642c0d024dab69b52bfc7bb07, type: 3}
       propertyPath: indicatorRadius
       value: 0.5
       objectReference: {fileID: 0}
+    - target: {fileID: 5692077656170630631, guid: e06f6ec642c0d024dab69b52bfc7bb07, type: 3}
+      propertyPath: rotateTowartsSprite
+      value: 
+      objectReference: {fileID: 21300000, guid: 186d9a00d6dd44c4bb512639ed10709a, type: 3}
     - target: {fileID: 7808270317032854874, guid: e06f6ec642c0d024dab69b52bfc7bb07, type: 3}
       propertyPath: m_Name
       value: Leg RD
@@ -1445,10 +1472,19 @@ PrefabInstance:
       propertyPath: m_ConnectedRigidBody
       value: 
       objectReference: {fileID: 2420974276315223857}
+    - target: {fileID: 9138137689897292428, guid: e06f6ec642c0d024dab69b52bfc7bb07, type: 3}
+      propertyPath: m_SleepingMode
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9138137689897292428, guid: e06f6ec642c0d024dab69b52bfc7bb07, type: 3}
+      propertyPath: m_CollisionDetection
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 3188569591406272534, guid: e06f6ec642c0d024dab69b52bfc7bb07, type: 3}
     - {fileID: 7808270317032854879, guid: e06f6ec642c0d024dab69b52bfc7bb07, type: 3}
     - {fileID: 7808270317032854878, guid: e06f6ec642c0d024dab69b52bfc7bb07, type: 3}
+    - {fileID: 5692077656170630631, guid: e06f6ec642c0d024dab69b52bfc7bb07, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: e06f6ec642c0d024dab69b52bfc7bb07, type: 3}
 --- !u!4 &9210939512865654904 stripped
 Transform:
@@ -1475,9 +1511,25 @@ PrefabInstance:
       value: 7
       objectReference: {fileID: 0}
     - target: {fileID: 5692077656170630631, guid: e06f6ec642c0d024dab69b52bfc7bb07, type: 3}
+      propertyPath: holdSprite
+      value: 
+      objectReference: {fileID: 21300000, guid: 6070a374cb3db0e44a5221a1030a1aaf, type: 3}
+    - target: {fileID: 5692077656170630631, guid: e06f6ec642c0d024dab69b52bfc7bb07, type: 3}
+      propertyPath: relaxSprite
+      value: 
+      objectReference: {fileID: 21300000, guid: dbb98b6f9f79ea54fa5dfcfae630efa6, type: 3}
+    - target: {fileID: 5692077656170630631, guid: e06f6ec642c0d024dab69b52bfc7bb07, type: 3}
+      propertyPath: rotateSprite
+      value: 
+      objectReference: {fileID: 21300000, guid: 9843bc42f1b3b044c9b0b9fedef524c6, type: 3}
+    - target: {fileID: 5692077656170630631, guid: e06f6ec642c0d024dab69b52bfc7bb07, type: 3}
       propertyPath: indicatorRadius
       value: 0.5
       objectReference: {fileID: 0}
+    - target: {fileID: 5692077656170630631, guid: e06f6ec642c0d024dab69b52bfc7bb07, type: 3}
+      propertyPath: rotateTowartsSprite
+      value: 
+      objectReference: {fileID: 21300000, guid: 186d9a00d6dd44c4bb512639ed10709a, type: 3}
     - target: {fileID: 7808270317032854874, guid: e06f6ec642c0d024dab69b52bfc7bb07, type: 3}
       propertyPath: m_Name
       value: Arm RD
@@ -1550,10 +1602,19 @@ PrefabInstance:
       propertyPath: m_ConnectedRigidBody
       value: 
       objectReference: {fileID: 4913211021721603319}
+    - target: {fileID: 9138137689897292428, guid: e06f6ec642c0d024dab69b52bfc7bb07, type: 3}
+      propertyPath: m_SleepingMode
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9138137689897292428, guid: e06f6ec642c0d024dab69b52bfc7bb07, type: 3}
+      propertyPath: m_CollisionDetection
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 3188569591406272534, guid: e06f6ec642c0d024dab69b52bfc7bb07, type: 3}
     - {fileID: 7808270317032854879, guid: e06f6ec642c0d024dab69b52bfc7bb07, type: 3}
     - {fileID: 7808270317032854878, guid: e06f6ec642c0d024dab69b52bfc7bb07, type: 3}
+    - {fileID: 5692077656170630631, guid: e06f6ec642c0d024dab69b52bfc7bb07, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: e06f6ec642c0d024dab69b52bfc7bb07, type: 3}
 --- !u!4 &8670030136535202194 stripped
 Transform:
@@ -1580,9 +1641,25 @@ PrefabInstance:
       value: 7
       objectReference: {fileID: 0}
     - target: {fileID: 5692077656170630631, guid: e06f6ec642c0d024dab69b52bfc7bb07, type: 3}
+      propertyPath: holdSprite
+      value: 
+      objectReference: {fileID: 21300000, guid: 6070a374cb3db0e44a5221a1030a1aaf, type: 3}
+    - target: {fileID: 5692077656170630631, guid: e06f6ec642c0d024dab69b52bfc7bb07, type: 3}
+      propertyPath: relaxSprite
+      value: 
+      objectReference: {fileID: 21300000, guid: dbb98b6f9f79ea54fa5dfcfae630efa6, type: 3}
+    - target: {fileID: 5692077656170630631, guid: e06f6ec642c0d024dab69b52bfc7bb07, type: 3}
+      propertyPath: rotateSprite
+      value: 
+      objectReference: {fileID: 21300000, guid: 9843bc42f1b3b044c9b0b9fedef524c6, type: 3}
+    - target: {fileID: 5692077656170630631, guid: e06f6ec642c0d024dab69b52bfc7bb07, type: 3}
       propertyPath: indicatorRadius
       value: 0.5
       objectReference: {fileID: 0}
+    - target: {fileID: 5692077656170630631, guid: e06f6ec642c0d024dab69b52bfc7bb07, type: 3}
+      propertyPath: rotateTowartsSprite
+      value: 
+      objectReference: {fileID: 21300000, guid: 186d9a00d6dd44c4bb512639ed10709a, type: 3}
     - target: {fileID: 7808270317032854874, guid: e06f6ec642c0d024dab69b52bfc7bb07, type: 3}
       propertyPath: m_Name
       value: Arm RU
@@ -1655,10 +1732,19 @@ PrefabInstance:
       propertyPath: m_ConnectedRigidBody
       value: 
       objectReference: {fileID: 468083342709975722}
+    - target: {fileID: 9138137689897292428, guid: e06f6ec642c0d024dab69b52bfc7bb07, type: 3}
+      propertyPath: m_SleepingMode
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9138137689897292428, guid: e06f6ec642c0d024dab69b52bfc7bb07, type: 3}
+      propertyPath: m_CollisionDetection
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 3188569591406272534, guid: e06f6ec642c0d024dab69b52bfc7bb07, type: 3}
     - {fileID: 7808270317032854879, guid: e06f6ec642c0d024dab69b52bfc7bb07, type: 3}
     - {fileID: 7808270317032854878, guid: e06f6ec642c0d024dab69b52bfc7bb07, type: 3}
+    - {fileID: 5692077656170630631, guid: e06f6ec642c0d024dab69b52bfc7bb07, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: e06f6ec642c0d024dab69b52bfc7bb07, type: 3}
 --- !u!50 &4913211021721603319 stripped
 Rigidbody2D:
@@ -1690,9 +1776,25 @@ PrefabInstance:
       value: 7
       objectReference: {fileID: 0}
     - target: {fileID: 5692077656170630631, guid: e06f6ec642c0d024dab69b52bfc7bb07, type: 3}
+      propertyPath: holdSprite
+      value: 
+      objectReference: {fileID: 21300000, guid: 6070a374cb3db0e44a5221a1030a1aaf, type: 3}
+    - target: {fileID: 5692077656170630631, guid: e06f6ec642c0d024dab69b52bfc7bb07, type: 3}
+      propertyPath: relaxSprite
+      value: 
+      objectReference: {fileID: 21300000, guid: dbb98b6f9f79ea54fa5dfcfae630efa6, type: 3}
+    - target: {fileID: 5692077656170630631, guid: e06f6ec642c0d024dab69b52bfc7bb07, type: 3}
+      propertyPath: rotateSprite
+      value: 
+      objectReference: {fileID: 21300000, guid: 9843bc42f1b3b044c9b0b9fedef524c6, type: 3}
+    - target: {fileID: 5692077656170630631, guid: e06f6ec642c0d024dab69b52bfc7bb07, type: 3}
       propertyPath: indicatorRadius
       value: 0.5
       objectReference: {fileID: 0}
+    - target: {fileID: 5692077656170630631, guid: e06f6ec642c0d024dab69b52bfc7bb07, type: 3}
+      propertyPath: rotateTowartsSprite
+      value: 
+      objectReference: {fileID: 21300000, guid: 186d9a00d6dd44c4bb512639ed10709a, type: 3}
     - target: {fileID: 7808270317032854874, guid: e06f6ec642c0d024dab69b52bfc7bb07, type: 3}
       propertyPath: m_Name
       value: Arm LU
@@ -1765,10 +1867,19 @@ PrefabInstance:
       propertyPath: m_ConnectedRigidBody
       value: 
       objectReference: {fileID: 468083342709975722}
+    - target: {fileID: 9138137689897292428, guid: e06f6ec642c0d024dab69b52bfc7bb07, type: 3}
+      propertyPath: m_SleepingMode
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9138137689897292428, guid: e06f6ec642c0d024dab69b52bfc7bb07, type: 3}
+      propertyPath: m_CollisionDetection
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 3188569591406272534, guid: e06f6ec642c0d024dab69b52bfc7bb07, type: 3}
     - {fileID: 7808270317032854879, guid: e06f6ec642c0d024dab69b52bfc7bb07, type: 3}
     - {fileID: 7808270317032854878, guid: e06f6ec642c0d024dab69b52bfc7bb07, type: 3}
+    - {fileID: 5692077656170630631, guid: e06f6ec642c0d024dab69b52bfc7bb07, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: e06f6ec642c0d024dab69b52bfc7bb07, type: 3}
 --- !u!50 &2502654421278577759 stripped
 Rigidbody2D:
@@ -1800,9 +1911,25 @@ PrefabInstance:
       value: 7
       objectReference: {fileID: 0}
     - target: {fileID: 5692077656170630631, guid: e06f6ec642c0d024dab69b52bfc7bb07, type: 3}
+      propertyPath: holdSprite
+      value: 
+      objectReference: {fileID: 21300000, guid: 6070a374cb3db0e44a5221a1030a1aaf, type: 3}
+    - target: {fileID: 5692077656170630631, guid: e06f6ec642c0d024dab69b52bfc7bb07, type: 3}
+      propertyPath: relaxSprite
+      value: 
+      objectReference: {fileID: 21300000, guid: dbb98b6f9f79ea54fa5dfcfae630efa6, type: 3}
+    - target: {fileID: 5692077656170630631, guid: e06f6ec642c0d024dab69b52bfc7bb07, type: 3}
+      propertyPath: rotateSprite
+      value: 
+      objectReference: {fileID: 21300000, guid: 9843bc42f1b3b044c9b0b9fedef524c6, type: 3}
+    - target: {fileID: 5692077656170630631, guid: e06f6ec642c0d024dab69b52bfc7bb07, type: 3}
       propertyPath: indicatorRadius
       value: 0.5
       objectReference: {fileID: 0}
+    - target: {fileID: 5692077656170630631, guid: e06f6ec642c0d024dab69b52bfc7bb07, type: 3}
+      propertyPath: rotateTowartsSprite
+      value: 
+      objectReference: {fileID: 21300000, guid: 186d9a00d6dd44c4bb512639ed10709a, type: 3}
     - target: {fileID: 7808270317032854874, guid: e06f6ec642c0d024dab69b52bfc7bb07, type: 3}
       propertyPath: m_Name
       value: Leg LD
@@ -1875,10 +2002,19 @@ PrefabInstance:
       propertyPath: m_ConnectedRigidBody
       value: 
       objectReference: {fileID: 8745013872788901612}
+    - target: {fileID: 9138137689897292428, guid: e06f6ec642c0d024dab69b52bfc7bb07, type: 3}
+      propertyPath: m_SleepingMode
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9138137689897292428, guid: e06f6ec642c0d024dab69b52bfc7bb07, type: 3}
+      propertyPath: m_CollisionDetection
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 3188569591406272534, guid: e06f6ec642c0d024dab69b52bfc7bb07, type: 3}
     - {fileID: 7808270317032854879, guid: e06f6ec642c0d024dab69b52bfc7bb07, type: 3}
     - {fileID: 7808270317032854878, guid: e06f6ec642c0d024dab69b52bfc7bb07, type: 3}
+    - {fileID: 5692077656170630631, guid: e06f6ec642c0d024dab69b52bfc7bb07, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: e06f6ec642c0d024dab69b52bfc7bb07, type: 3}
 --- !u!4 &3638412782706328796 stripped
 Transform:
@@ -1905,9 +2041,25 @@ PrefabInstance:
       value: 7
       objectReference: {fileID: 0}
     - target: {fileID: 5692077656170630631, guid: e06f6ec642c0d024dab69b52bfc7bb07, type: 3}
+      propertyPath: holdSprite
+      value: 
+      objectReference: {fileID: 21300000, guid: 6070a374cb3db0e44a5221a1030a1aaf, type: 3}
+    - target: {fileID: 5692077656170630631, guid: e06f6ec642c0d024dab69b52bfc7bb07, type: 3}
+      propertyPath: relaxSprite
+      value: 
+      objectReference: {fileID: 21300000, guid: dbb98b6f9f79ea54fa5dfcfae630efa6, type: 3}
+    - target: {fileID: 5692077656170630631, guid: e06f6ec642c0d024dab69b52bfc7bb07, type: 3}
+      propertyPath: rotateSprite
+      value: 
+      objectReference: {fileID: 21300000, guid: 9843bc42f1b3b044c9b0b9fedef524c6, type: 3}
+    - target: {fileID: 5692077656170630631, guid: e06f6ec642c0d024dab69b52bfc7bb07, type: 3}
       propertyPath: indicatorRadius
       value: 0.5
       objectReference: {fileID: 0}
+    - target: {fileID: 5692077656170630631, guid: e06f6ec642c0d024dab69b52bfc7bb07, type: 3}
+      propertyPath: rotateTowartsSprite
+      value: 
+      objectReference: {fileID: 21300000, guid: 186d9a00d6dd44c4bb512639ed10709a, type: 3}
     - target: {fileID: 7808270317032854874, guid: e06f6ec642c0d024dab69b52bfc7bb07, type: 3}
       propertyPath: m_Name
       value: Leg RU
@@ -1980,10 +2132,19 @@ PrefabInstance:
       propertyPath: m_ConnectedRigidBody
       value: 
       objectReference: {fileID: 468083342709975722}
+    - target: {fileID: 9138137689897292428, guid: e06f6ec642c0d024dab69b52bfc7bb07, type: 3}
+      propertyPath: m_SleepingMode
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9138137689897292428, guid: e06f6ec642c0d024dab69b52bfc7bb07, type: 3}
+      propertyPath: m_CollisionDetection
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 3188569591406272534, guid: e06f6ec642c0d024dab69b52bfc7bb07, type: 3}
     - {fileID: 7808270317032854879, guid: e06f6ec642c0d024dab69b52bfc7bb07, type: 3}
     - {fileID: 7808270317032854878, guid: e06f6ec642c0d024dab69b52bfc7bb07, type: 3}
+    - {fileID: 5692077656170630631, guid: e06f6ec642c0d024dab69b52bfc7bb07, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: e06f6ec642c0d024dab69b52bfc7bb07, type: 3}
 --- !u!50 &2420974276315223857 stripped
 Rigidbody2D:
@@ -2015,9 +2176,25 @@ PrefabInstance:
       value: 7
       objectReference: {fileID: 0}
     - target: {fileID: 5692077656170630631, guid: e06f6ec642c0d024dab69b52bfc7bb07, type: 3}
+      propertyPath: holdSprite
+      value: 
+      objectReference: {fileID: 21300000, guid: 6070a374cb3db0e44a5221a1030a1aaf, type: 3}
+    - target: {fileID: 5692077656170630631, guid: e06f6ec642c0d024dab69b52bfc7bb07, type: 3}
+      propertyPath: relaxSprite
+      value: 
+      objectReference: {fileID: 21300000, guid: dbb98b6f9f79ea54fa5dfcfae630efa6, type: 3}
+    - target: {fileID: 5692077656170630631, guid: e06f6ec642c0d024dab69b52bfc7bb07, type: 3}
+      propertyPath: rotateSprite
+      value: 
+      objectReference: {fileID: 21300000, guid: 9843bc42f1b3b044c9b0b9fedef524c6, type: 3}
+    - target: {fileID: 5692077656170630631, guid: e06f6ec642c0d024dab69b52bfc7bb07, type: 3}
       propertyPath: indicatorRadius
       value: 0.5
       objectReference: {fileID: 0}
+    - target: {fileID: 5692077656170630631, guid: e06f6ec642c0d024dab69b52bfc7bb07, type: 3}
+      propertyPath: rotateTowartsSprite
+      value: 
+      objectReference: {fileID: 21300000, guid: 186d9a00d6dd44c4bb512639ed10709a, type: 3}
     - target: {fileID: 7808270317032854874, guid: e06f6ec642c0d024dab69b52bfc7bb07, type: 3}
       propertyPath: m_Name
       value: Arm LD
@@ -2090,10 +2267,19 @@ PrefabInstance:
       propertyPath: m_ConnectedRigidBody
       value: 
       objectReference: {fileID: 2502654421278577759}
+    - target: {fileID: 9138137689897292428, guid: e06f6ec642c0d024dab69b52bfc7bb07, type: 3}
+      propertyPath: m_SleepingMode
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9138137689897292428, guid: e06f6ec642c0d024dab69b52bfc7bb07, type: 3}
+      propertyPath: m_CollisionDetection
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 3188569591406272534, guid: e06f6ec642c0d024dab69b52bfc7bb07, type: 3}
     - {fileID: 7808270317032854879, guid: e06f6ec642c0d024dab69b52bfc7bb07, type: 3}
     - {fileID: 7808270317032854878, guid: e06f6ec642c0d024dab69b52bfc7bb07, type: 3}
+    - {fileID: 5692077656170630631, guid: e06f6ec642c0d024dab69b52bfc7bb07, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: e06f6ec642c0d024dab69b52bfc7bb07, type: 3}
 --- !u!4 &2052345255875882457 stripped
 Transform:
@@ -2120,9 +2306,25 @@ PrefabInstance:
       value: 7
       objectReference: {fileID: 0}
     - target: {fileID: 5692077656170630631, guid: e06f6ec642c0d024dab69b52bfc7bb07, type: 3}
+      propertyPath: holdSprite
+      value: 
+      objectReference: {fileID: 21300000, guid: 6070a374cb3db0e44a5221a1030a1aaf, type: 3}
+    - target: {fileID: 5692077656170630631, guid: e06f6ec642c0d024dab69b52bfc7bb07, type: 3}
+      propertyPath: relaxSprite
+      value: 
+      objectReference: {fileID: 21300000, guid: dbb98b6f9f79ea54fa5dfcfae630efa6, type: 3}
+    - target: {fileID: 5692077656170630631, guid: e06f6ec642c0d024dab69b52bfc7bb07, type: 3}
+      propertyPath: rotateSprite
+      value: 
+      objectReference: {fileID: 21300000, guid: 9843bc42f1b3b044c9b0b9fedef524c6, type: 3}
+    - target: {fileID: 5692077656170630631, guid: e06f6ec642c0d024dab69b52bfc7bb07, type: 3}
       propertyPath: indicatorRadius
       value: 0.5
       objectReference: {fileID: 0}
+    - target: {fileID: 5692077656170630631, guid: e06f6ec642c0d024dab69b52bfc7bb07, type: 3}
+      propertyPath: rotateTowartsSprite
+      value: 
+      objectReference: {fileID: 21300000, guid: 186d9a00d6dd44c4bb512639ed10709a, type: 3}
     - target: {fileID: 7808270317032854874, guid: e06f6ec642c0d024dab69b52bfc7bb07, type: 3}
       propertyPath: m_Name
       value: Head
@@ -2195,10 +2397,19 @@ PrefabInstance:
       propertyPath: m_ConnectedRigidBody
       value: 
       objectReference: {fileID: 468083342709975722}
+    - target: {fileID: 9138137689897292428, guid: e06f6ec642c0d024dab69b52bfc7bb07, type: 3}
+      propertyPath: m_SleepingMode
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9138137689897292428, guid: e06f6ec642c0d024dab69b52bfc7bb07, type: 3}
+      propertyPath: m_CollisionDetection
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 3188569591406272534, guid: e06f6ec642c0d024dab69b52bfc7bb07, type: 3}
     - {fileID: 7808270317032854879, guid: e06f6ec642c0d024dab69b52bfc7bb07, type: 3}
     - {fileID: 7808270317032854878, guid: e06f6ec642c0d024dab69b52bfc7bb07, type: 3}
+    - {fileID: 5692077656170630631, guid: e06f6ec642c0d024dab69b52bfc7bb07, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: e06f6ec642c0d024dab69b52bfc7bb07, type: 3}
 --- !u!4 &1637484124844552705 stripped
 Transform:

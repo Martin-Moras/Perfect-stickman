@@ -35,6 +35,42 @@ public partial class @GameInputs: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Hold"",
+                    ""type"": ""Button"",
+                    ""id"": ""83a3c6b8-ed84-4dbb-b2f3-52b0b2fd3fba"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Relax"",
+                    ""type"": ""Button"",
+                    ""id"": ""7634dc25-f462-4470-9c92-52c95e155bfb"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Rotate Left"",
+                    ""type"": ""Button"",
+                    ""id"": ""5cd543f7-f867-40fe-8433-418355fd75ab"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Rotate Right"",
+                    ""type"": ""Button"",
+                    ""id"": ""afa0c75f-fabc-4a94-abe0-76b5fcbde14c"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -46,6 +82,50 @@ public partial class @GameInputs: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""groups"": """",
                     ""action"": ""ControllJoint"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""e11dbb2e-b553-45f5-83fd-6cca04f2c7c9"",
+                    ""path"": ""<Keyboard>/z"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Hold"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""3782ea2b-0cd3-4bf1-bf9d-2daff63a47cc"",
+                    ""path"": ""<Keyboard>/x"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Relax"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""fc993101-7d46-45bb-820c-a5ae0e63714d"",
+                    ""path"": ""<Keyboard>/c"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Rotate Left"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""a3337593-d7a9-4265-bafc-5f8d595a9c0e"",
+                    ""path"": ""<Keyboard>/v"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Rotate Right"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -127,6 +207,10 @@ public partial class @GameInputs: IInputActionCollection2, IDisposable
         // Player
         m_Player = asset.FindActionMap("Player", throwIfNotFound: true);
         m_Player_ControllJoint = m_Player.FindAction("ControllJoint", throwIfNotFound: true);
+        m_Player_Hold = m_Player.FindAction("Hold", throwIfNotFound: true);
+        m_Player_Relax = m_Player.FindAction("Relax", throwIfNotFound: true);
+        m_Player_RotateLeft = m_Player.FindAction("Rotate Left", throwIfNotFound: true);
+        m_Player_RotateRight = m_Player.FindAction("Rotate Right", throwIfNotFound: true);
         // Frames
         m_Frames = asset.FindActionMap("Frames", throwIfNotFound: true);
         m_Frames_NextFrame = m_Frames.FindAction("NextFrame", throwIfNotFound: true);
@@ -193,11 +277,19 @@ public partial class @GameInputs: IInputActionCollection2, IDisposable
     private readonly InputActionMap m_Player;
     private List<IPlayerActions> m_PlayerActionsCallbackInterfaces = new List<IPlayerActions>();
     private readonly InputAction m_Player_ControllJoint;
+    private readonly InputAction m_Player_Hold;
+    private readonly InputAction m_Player_Relax;
+    private readonly InputAction m_Player_RotateLeft;
+    private readonly InputAction m_Player_RotateRight;
     public struct PlayerActions
     {
         private @GameInputs m_Wrapper;
         public PlayerActions(@GameInputs wrapper) { m_Wrapper = wrapper; }
         public InputAction @ControllJoint => m_Wrapper.m_Player_ControllJoint;
+        public InputAction @Hold => m_Wrapper.m_Player_Hold;
+        public InputAction @Relax => m_Wrapper.m_Player_Relax;
+        public InputAction @RotateLeft => m_Wrapper.m_Player_RotateLeft;
+        public InputAction @RotateRight => m_Wrapper.m_Player_RotateRight;
         public InputActionMap Get() { return m_Wrapper.m_Player; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -210,6 +302,18 @@ public partial class @GameInputs: IInputActionCollection2, IDisposable
             @ControllJoint.started += instance.OnControllJoint;
             @ControllJoint.performed += instance.OnControllJoint;
             @ControllJoint.canceled += instance.OnControllJoint;
+            @Hold.started += instance.OnHold;
+            @Hold.performed += instance.OnHold;
+            @Hold.canceled += instance.OnHold;
+            @Relax.started += instance.OnRelax;
+            @Relax.performed += instance.OnRelax;
+            @Relax.canceled += instance.OnRelax;
+            @RotateLeft.started += instance.OnRotateLeft;
+            @RotateLeft.performed += instance.OnRotateLeft;
+            @RotateLeft.canceled += instance.OnRotateLeft;
+            @RotateRight.started += instance.OnRotateRight;
+            @RotateRight.performed += instance.OnRotateRight;
+            @RotateRight.canceled += instance.OnRotateRight;
         }
 
         private void UnregisterCallbacks(IPlayerActions instance)
@@ -217,6 +321,18 @@ public partial class @GameInputs: IInputActionCollection2, IDisposable
             @ControllJoint.started -= instance.OnControllJoint;
             @ControllJoint.performed -= instance.OnControllJoint;
             @ControllJoint.canceled -= instance.OnControllJoint;
+            @Hold.started -= instance.OnHold;
+            @Hold.performed -= instance.OnHold;
+            @Hold.canceled -= instance.OnHold;
+            @Relax.started -= instance.OnRelax;
+            @Relax.performed -= instance.OnRelax;
+            @Relax.canceled -= instance.OnRelax;
+            @RotateLeft.started -= instance.OnRotateLeft;
+            @RotateLeft.performed -= instance.OnRotateLeft;
+            @RotateLeft.canceled -= instance.OnRotateLeft;
+            @RotateRight.started -= instance.OnRotateRight;
+            @RotateRight.performed -= instance.OnRotateRight;
+            @RotateRight.canceled -= instance.OnRotateRight;
         }
 
         public void RemoveCallbacks(IPlayerActions instance)
@@ -291,6 +407,10 @@ public partial class @GameInputs: IInputActionCollection2, IDisposable
     public interface IPlayerActions
     {
         void OnControllJoint(InputAction.CallbackContext context);
+        void OnHold(InputAction.CallbackContext context);
+        void OnRelax(InputAction.CallbackContext context);
+        void OnRotateLeft(InputAction.CallbackContext context);
+        void OnRotateRight(InputAction.CallbackContext context);
     }
     public interface IFramesActions
     {

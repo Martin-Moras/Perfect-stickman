@@ -9,8 +9,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3706926018397288823}
+  - component: {fileID: 5355871817562212005}
   - component: {fileID: 8888731951344523354}
-  - component: {fileID: 5646116977209864543}
   m_Layer: 0
   m_Name: Joint indicator
   m_TagString: Untagged
@@ -33,6 +33,19 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &5355871817562212005
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 24069951133739236}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b3d13350ef84c18449446e3a9cea0dcb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  myJointScrpt: {fileID: 0}
 --- !u!212 &8888731951344523354
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -85,24 +98,3 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!114 &5646116977209864543
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 24069951133739236}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: cd6058ab279ba41449d3717afd2962e0, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  isUiElement: 0
-  rawImage: {fileID: 0}
-  uiCamera: {fileID: 0}
-  joint: {fileID: 0}
-  indicatorRadius: 0
-  holdSprite: {fileID: 21300000, guid: 6070a374cb3db0e44a5221a1030a1aaf, type: 3}
-  relaxSprite: {fileID: 21300000, guid: dbb98b6f9f79ea54fa5dfcfae630efa6, type: 3}
-  rotateSprite: {fileID: 21300000, guid: 9843bc42f1b3b044c9b0b9fedef524c6, type: 3}
-  rotateTowartsSprite: {fileID: 21300000, guid: 186d9a00d6dd44c4bb512639ed10709a, type: 3}

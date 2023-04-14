@@ -7,9 +7,14 @@ using UnityEngine.UI;
 
 public class JointController : MonoBehaviour
 {
-	float showScale = 1.5f;
-	float hideScale = 1f;
+	[SerializeField] private float showScale = 1.5f;
+	[SerializeField] private float hideScale = 1f;
+	[SerializeField] private float indicatorRadius = .5f;
+
+	public bool isUiElement = false;
+
 	#region Input
+	[SerializeField] private GameInputs inputs;
 	private Vector2 mousePos;
 	private Vector2 mouseScreenPos;
 	//private Vector2 mouseImagePos;
@@ -19,19 +24,14 @@ public class JointController : MonoBehaviour
 	private bool isMouseClicked;
 	private bool mouseInRange = false;
 	#endregion
-
-	public bool isUiElement = false;
-
+	#region References
 	[HideInInspector] public RawImage rawImage;
 	[HideInInspector] public Camera uiCamera;
 	public HingeJoint2D joint;
 	private JointBehaviour jointScript;
 	private SpriteRenderer spriteRenderer;
 	private JointController jointIndicatorScript;
-
-	[SerializeField] private float indicatorRadius = .5f;
-	[SerializeField] private GameInputs inputs;
-
+	#endregion
 	#region Sprite
 	[SerializeField] private Sprite holdSprite;
 	[SerializeField] private Sprite relaxSprite;
@@ -70,13 +70,8 @@ public class JointController : MonoBehaviour
 	}
 	private void SetAction()
 	{
-		/*print($"isMouseClicked: {isMouseClicked}\n" +
-			$"hold?: {hold}\n" +
-			$"mouseInRange: {mouseInRange}");*/
 
-		//Debug.DrawLine(mousePos, Camera.main.ScreenToWorldPoint(mouseDownPos));
-
-		if(!isMouseClicked && jointInputIsPressed && mouseInRange)
+		/*if(!isMouseClicked && jointInputIsPressed && mouseInRange)
 		{
 			mouseDownPos = mouseScreenPos;
 			isMouseClicked = true;
@@ -91,20 +86,17 @@ public class JointController : MonoBehaviour
 		}
 		void Tap()
 		{
-			if (jointScript.currState != 0) jointScript.currState = 0;
-			else jointScript.currState = 1;
+			if (jointScript.CurrState != 0) jointScript.CurrState = 0;
+			else jointScript.CurrState = 1;
 		}
 		void Drag()
 		{
-			jointScript.currState = 2;
+			jointScript.CurrState = 2;
 			int offset = (int)Mathf.Sign(mouseScreenPos.x - mouseDownPos.x);
 
 			jointScript.rotationSpeed = offset * 1000;
-
-			//jointScript.SetTargetAngle(Mathf.Atan2(offset.y, -offset.x) * Mathf.Rad2Deg);
-		}
+		}*/
 	}
-	
 	private void Indicator()
 	{
 		ShowIndicator();
@@ -119,12 +111,6 @@ public class JointController : MonoBehaviour
 				)
 				Show();
 			else Hide();
-
-			if(transform.parent.name == "Head" && isUiElement) print($"joint pos: {jointPos}\n" +
-				$"mousepos: {mousePos}\n" +
-				$"magnitute: {(jointPos - mousePos).magnitude}\n" +
-				$"\n"
-				);
 
 			UpdatePos();
 			UpdateSprite();
@@ -156,10 +142,10 @@ public class JointController : MonoBehaviour
 			}
 			void UpdateSprite()
 			{
-				if (jointScript.currState == 0) spriteRenderer.sprite = holdSprite;
-				else if (jointScript.currState == 1) spriteRenderer.sprite = relaxSprite;
-				else if (jointScript.currState == 2) spriteRenderer.sprite = rotateSprite;
-				else if (jointScript.currState == 3) spriteRenderer.sprite = rotateTowartsSprite;
+				if		(jointScript.CurrState == 0) spriteRenderer.sprite = holdSprite;
+				else if (jointScript.CurrState == 1) spriteRenderer.sprite = relaxSprite;
+				else if (jointScript.CurrState == 2) spriteRenderer.sprite = rotateSprite;
+				else if (jointScript.CurrState == 3) spriteRenderer.sprite = rotateTowartsSprite;
 			}
 			void UpdatePos()
 			{
@@ -187,7 +173,7 @@ public class JointController : MonoBehaviour
 			Vector2 imageScreenPos = rawImage.transform.position;
 			Vector2 imageWorldPos = Camera.main.ScreenToWorldPoint(imageScreenPos);
 			float uiCamScale = uiCamera.orthographicSize;
-			Vector2 uiCam_Image_Distance = uiCamera.transform.position - Camera.main.ScreenToWorldPoint(imageScreenPos);
+			Vector2 uiCamPos = uiCamera.transform.position;
 
 			Vector2 imageScale = (Vector2)Camera.main.ScreenToWorldPoint(imageScreenPos + rawImage.rectTransform.sizeDelta / 2) - imageWorldPos;
 
@@ -195,10 +181,10 @@ public class JointController : MonoBehaviour
 
 			Vector2 mousePos = (Vector2)Camera.main.ScreenToWorldPoint(Mouse.current.position.ReadValue());
 			//print("asef: " + mousePos);
-			Vector2 output = (mousePos - imageWorldPos) * sizeRatio + uiCam_Image_Distance + imageWorldPos;
+			Vector2 output = (mousePos - imageWorldPos) * sizeRatio + uiCamPos;
 			Vector2 outputScreen = Camera.main.WorldToScreenPoint(output);
 
-			//Debug.DrawLine(mousePos, outputScreen, Color.red);
+			//Debug.DrawLine(mousePos, output, Color.red);
 
 			this.mousePos = output;
 			this.mouseScreenPos = outputScreen;

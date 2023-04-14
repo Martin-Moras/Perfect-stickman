@@ -9,7 +9,10 @@ public static class CreateUiStickman
 	{
 		var uiObject = GameObject.Instantiate(gameObject, Vector3.zero, Quaternion.identity, parent);
 		List<GameObject> children = GetChildren();
+		var stickmanController = uiObject.GetComponent<StickmanController>();
+		var oldJoints = gameObject.GetComponentsInChildren<HingeJoint2D>().ToList();
 
+		SetupStickmanController();
 		ReplaceJoints();
 
 		foreach (var chiled in children)
@@ -17,7 +20,6 @@ public static class CreateUiStickman
 			SetLayer(chiled);
 			RemoveComponents(chiled);
 		}
-		AddControllerScript();
 
 
 		List<GameObject> GetChildren()
@@ -29,28 +31,33 @@ public static class CreateUiStickman
 			}
 			return output;
 		}
+		void SetupStickmanController()
+		{
+			stickmanController.isUiElement = true;
+			stickmanController.gameObject.name = "Stickman Ui";
+			stickmanController._joints = gameObject.GetComponentsInChildren<HingeJoint2D>().ToList();
+			stickmanController._jointScripts = gameObject.GetComponentsInChildren<JointBehaviour>().ToList();
+		}
 		void ReplaceJoints()
 		{
-			var joints = uiObject.GetComponentsInChildren<HingeJoint2D>().ToList();
-			var oldJoints = gameObject.GetComponentsInChildren<HingeJoint2D>().ToList();
-			var indicators = uiObject.GetComponentsInChildren<JointController>().ToList();
+			var indicators = uiObject.GetComponentsInChildren<JointIndicatorScript>().ToList();
+			var oldIndicators = gameObject.GetComponentsInChildren<JointIndicatorScript>().ToList();
 
-			Transform canvas = GameObject.FindAnyObjectByType<Canvas>().transform;
-			Camera uiCam = canvas.GetComponentInChildren<Camera>();
-			RawImage rawImage = canvas.GetComponentInChildren<RawImage>();
 
-			foreach (var joint in joints)
+			for (int i = 0; i < indicators.Count; i++)
 			{
-				Vector2 jointPos = (Vector2)(Quaternion.Euler(0, 0, joint.connectedBody.rotation) * (joint.connectedAnchor * joint.connectedBody.transform.lossyScale)) + joint.connectedBody.position;
-				
-				indicators[0].transform.position = jointPos;
-				indicators[0].isUiElement = true;
-				indicators[0].joint = oldJoints[0];
-				indicators[0].uiCamera = uiCam;
-				indicators[0].rawImage = rawImage;
+				var joint = oldIndicators[i].myJoint;
 
-				oldJoints.RemoveAt(0);
-				indicators.RemoveAt(0);
+				Vector2 jointPos = (Vector2)(joint.connectedBody.transform.rotation * (joint.connectedAnchor * joint.connectedBody.transform.lossyScale)) + joint.connectedBody.position;
+
+
+				indicators[i].myJointScript = oldIndicators[i].myJointScript;
+				indicators[i].myJoint = joint;
+				indicators[i].transform.position = jointPos;
+				indicators[i].isUiElement = true;
+				stickmanController.isUiElement = true;
+				indicators[i].GetComponent<SpriteRenderer>().enabled = true;
+
 			}
 		}
 		void SetLayer(GameObject chiled)
@@ -59,16 +66,12 @@ public static class CreateUiStickman
 		}
 		void RemoveComponents(GameObject chiled)
 		{
-			GameObject.Destroy(chiled.GetComponent<StickmanController>());
 			GameObject.Destroy(chiled.GetComponent<IgnoreCollision>());
 			GameObject.Destroy(chiled.GetComponent<JointBehaviour>());
+			GameObject.Destroy(chiled.GetComponent<JointController>());
 			GameObject.Destroy(chiled.GetComponent<Collider2D>());
 			GameObject.Destroy(chiled.GetComponent<Joint2D>());
 			GameObject.Destroy(chiled.GetComponent<Rigidbody2D>());
-		}
-		void AddControllerScript()
-		{
-			var script = uiObject.AddComponent<UiStickmanController>();
 		}
 	}
 }

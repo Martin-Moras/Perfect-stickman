@@ -6,57 +6,103 @@ using System;
 public class JointBehaviour : MonoBehaviour
 {
 	//public float targetAngle;
-	public float rotationSpeed;
+	public float maxRotationSpeed;
+	[SerializeField] private float rotateDirection;
 	public float motorTorque;
 
-	public float currState = 3;
-	public enum State
+	public bool isPrediction = false;
+
+	[SerializeField] private float propCurrState;
+
+	public float CurrState
+	{
+		get { return propCurrState; }
+		private set 
+		{
+			propCurrState = value;
+			if (isPrediction) return;
+			FindFirstObjectByType<PredictFuture>().ResetScene();
+		}
+	}
+
+	private enum State
 	{
 		Hold = 0,
 		Relax = 1,
 		Rotate = 2,
 		RotateTowards = 3
 	}
-	[HideInInspector] public GameObject indicator;
-	
-
-	private Rigidbody2D rb;
 	private HingeJoint2D joint;
 	private JointMotor2D motor;
+
+
 	void Start()
 	{
-		rb = GetComponent<Rigidbody2D>();
 		joint = GetComponent<HingeJoint2D>();
 		motor = joint.motor;
+
+		if (gameObject.scene.name == "Simulation") isPrediction = true;
+
+		if (isPrediction) FindFirstObjectByType<FrameManager>().PredictionFrame += OnPredictionFrame;
+		else FindFirstObjectByType<FrameManager>().PhysicFrame += OnPhysicFrame;
 	}
-	void FixedUpdate()
+	private void OnDestroy()
+	{
+		var frameManager = FindFirstObjectByType<FrameManager>();
+
+		if (frameManager == null)
+		{
+			Console.WriteLine("frameManager == null");
+			return;
+		}
+
+		frameManager.PhysicFrame -= OnPhysicFrame;
+		frameManager.PredictionFrame -= OnPredictionFrame;
+	}
+	public void OnPhysicFrame(object sorce, EventArgs e)
 	{
 		JointAction();
 	}
-	void Update()
+	public void OnPredictionFrame(object sorce, EventArgs e)
 	{
+		JointAction();
+	}
+
+	public void ChangeTo_Hold()
+	{
+		CurrState = 0;
+	}
+	public void ChangeTo_Relax()
+	{
+		CurrState = 1;
+	}
+	public void ChangeTo_Rotate(int direction)
+	{
+		CurrState = 2;
+		rotateDirection = Mathf.Sign(direction);
 	}
 	public void JointAction()
 	{
-		if (currState == (int)State.Hold) Hold();
-		else if (currState == (int)State.Relax) Relax();
-		else if (currState == (int)State.Rotate) Rotate(rotationSpeed);
+		if (CurrState == (int)State.Hold) Hold();
+		else if (CurrState == (int)State.Relax) Relax();
+		else if (CurrState == (int)State.Rotate) Rotate();
 		//else if (currState == (int)State.RotateTowards) RotateTowards(targetAngle);
 	}
-	void Hold()
+	private void Hold()
 	{
 		SetMotorSpeed(0);
 		SetMotorTorque(motorTorque);
 	}
-	void Relax()
+	private void Relax()
 	{
 		SetMotorTorque(0);
 	}
-	void Rotate(float speed)
+	private void Rotate()
 	{
+		SetMotorSpeed(maxRotationSpeed * rotateDirection);
 		SetMotorTorque(motorTorque);
-		SetMotorSpeed(speed);
 	}
+
 	private float ToAngle(float angle)
 	{
 		angle = angle % 360;
@@ -70,15 +116,14 @@ public class JointBehaviour : MonoBehaviour
 	}
 	private void SetMotorSpeed(float speed)
 	{
-		
 		motor.motorSpeed = speed;
 		joint.motor = motor;
 	}
 	private void SetMotorTorque(float torque)
 	{
-		
 		motor.maxMotorTorque = torque;
 		joint.motor = motor;
+		
 	}
 	/*void RotateTowards(float targetAngle)
 	{
